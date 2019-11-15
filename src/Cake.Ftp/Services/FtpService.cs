@@ -71,5 +71,55 @@ namespace Cake.Ftp.Services {
             _log.Information("File upload complete, status {0}", response.StatusDescription);
             response.Close();
         }
+
+        /// <summary>
+        /// Creates a directory
+        /// </summary>
+        /// <param name="serverUri">The URI for the FTP server including the folder name.</param>
+        /// <param name="username">The FTP username.</param>
+        /// <param name="password">The FTP password.</param>
+        public void CreateDirectory(Uri serverUri, string username, string password)
+        {
+            // Adding verbose logging for the URI being used.
+            _log.Verbose("Making directory at {0}", serverUri);
+            // Creating the request
+            var request = (FtpWebRequest)WebRequest.Create(serverUri);
+            request.Method = WebRequestMethods.Ftp.MakeDirectory;
+            request.Credentials = new NetworkCredential(username, password);
+
+
+            // Getting the response from the FTP server.
+            var response = (FtpWebResponse)request.GetResponse();
+
+            // Logging if it completed and the description of the status returned.
+            _log.Information("Folder created, status {0}", response.StatusDescription);
+            response.Close();
+        }
+
+
+
+        /// <summary>
+        /// Deletes a directory
+        /// </summary>
+        /// <param name="serverUri">The URI for the FTP server including the folder name.</param>
+        /// <param name="username">The FTP username.</param>
+        /// <param name="password">The FTP password.</param>
+        public void DeleteDirectory(Uri serverUri, string username, string password)
+        {
+            // Adding verbose logging for the URI being used.
+            _log.Verbose("Deleting directory at {0}", serverUri);
+            // Creating the request
+            var request = (FtpWebRequest)WebRequest.Create(serverUri);
+            request.Method = WebRequestMethods.Ftp.RemoveDirectory;
+            request.Credentials = new NetworkCredential(username, password);
+
+
+            // Getting the response from the FTP server.
+            var response = (FtpWebResponse)request.GetResponse();
+
+            // Logging if it completed and the description of the status returned.
+            _log.Information("Folder deleted, status {0}", response.StatusDescription);
+            response.Close();
+        }
     }
 }

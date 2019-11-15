@@ -55,6 +55,30 @@ namespace Cake.Ftp {
             _ftpService.DeleteFile(serverUri, settings.Username, settings.Password);
         }
         
+        /// <summary>
+        /// Creates a directory
+        /// </summary>
+        /// <param name="serverUri">The URI for the FTP server including the folder name.</param>
+        /// <param name="settings">The settings.</param>
+        public void CreateDirectory(Uri serverUri, FtpSettings settings)
+        {
+            CheckParams(serverUri, settings);
+
+            _ftpService.CreateDirectory(serverUri, settings.Username, settings.Password);
+        }
+
+        /// <summary>
+        /// Deletes a directory
+        /// </summary>
+        /// <param name="serverUri">The URI for the FTP server including the folder name.</param>
+        /// <param name="settings">The settings.</param>
+        public void DeleteDirectory(Uri serverUri, FtpSettings settings)
+        {
+            CheckParams(serverUri, settings);
+
+            _ftpService.DeleteDirectory(serverUri, settings.Username, settings.Password);
+        }
+
         private void CheckParams(Uri serverUri, FtpSettings settings) {
             serverUri.NotNull(nameof(serverUri));
             settings.Username.NotNullOrWhiteSpace(nameof(settings.Username));
